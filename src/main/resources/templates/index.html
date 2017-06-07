@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+
+<script type="text/javascript" th:src="@{jquery.min.js}"></script>
+
+<script type="text/javascript" th:inline="javascript" >
+	$(function(){
+		var str = "";
+		str += "姓名：[[${person1.name}]]";
+		str += "年龄：[[${person1.age}]]";
+		console.log(str);
+	});
+	
+	function btnClick(id){
+		console.log("触发了点击事件，这是参数：" + id);
+	}
+	
+	function login(){
+		$.ajax({
+            type: "POST",
+            url:"/login",
+            data:$('.dtBodyDiv .addWorkOrderForm').serialize(),
+            dataType: "json",
+            async: false,
+            success: function(data) {
+            	alert(data.tip);
+            	if(data.result){
+            		console.log("这里是操作成功");
+            	}
+            }
+       });
+	}
+	
+</script>
+
+<style type="text/css">
+	div{
+		border: 1px solid red;
+		margin-bottom: 15px;
+	}
+	
+	span{
+		display: block;
+	}
+	
+	span.title{
+		font-weight: bold;
+	}
+	
+</style>
+
+</head>
+<body>
+	<div>
+		<span class="title">
+		读取变量
+		</span>
+		<span th:text="${say}"></span>
+	</div>
+	
+	<div>
+		<span class="title">
+		读取对象属性
+		</span>
+		<span th:text="${person1.name}">静态名称</span>
+	</div>
+	
+	<div>
+		<span class="title">
+		测试循环
+		</span>
+		<table>
+			<tr th:each="person:${listPerson}">
+				<td th:text="${person.name}">姓名</td>
+				<td th:text="${person.age}">年龄</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div>
+		<span class="title">
+		测试循环带下标、集合大小
+		</span>
+		<table>
+			<tr th:each="person:${listPerson}">
+				<td th:text="'姓名： ' + ${person.name} + ' 下标 ： ' + ${personStat.index}
+				 	+ ' 大小 ： ' + ${personStat.size}">
+					姓名
+				</td>
+				<td th:text="'年龄：' + ${person.age}">年龄</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div>
+		<span class="title">
+		if else语句测试	没有else if		但是可以用三元表达式
+		</span>
+		<span th:if="${ 3 + 5 >= 7}">
+			值为真，这个if有效
+		</span>
+		<span th:unless="${3 + 5 >= 7}">
+			值为假，这个是else
+		</span>
+	</div>
+	
+	<div>
+		<span class="title">
+		三元表达式	5 &gt; 3 ? "是的 5 &gt; 3" : "否 5 &lt; 3"
+		</span>
+		<span th:text="${ 5 > 3 } ? '是的  5 &gt; 3' : '否  5 &lt; 3'">
+			这里是三元表达式
+		</span>
+	</div>
+	
+	<div>
+		<span class="title">
+		double 小数格式化	四舍五入
+		</span>
+		<span th:text="${#numbers.formatDecimal(moneyDouble,1,2)}">
+			1.123456
+		</span>
+	</div>
+	
+	<div>
+		<span class="title">
+		bigDecimal 小数格式化	四舍五入
+		</span>
+		<span th:text="${#numbers.formatDecimal(moneyBigDecimal,1,2)}">
+			1.123456
+		</span>
+	</div>
+	
+	<div>
+		<span class="title">
+		日期格式化
+		</span>
+		<span th:text="${#dates.format(systemDate,'yyyy-MM-dd')}">
+			时间
+		</span>
+		<span th:text="${#dates.format(systemDate,'yyyy-MM-dd HH:mm:ss')}">
+			时间
+		</span>
+	</div>
+	
+	<div>
+		<span class="title">
+		给按钮添加点击事件
+		</span>
+		<span>
+			<button onclick="btnClick(15);">测试点击事件</button>
+		</span>
+	</div>
+	
+	<div>
+		<span class="title">
+		form测试
+		</span>
+		<span>
+			<form action="/login" method="post">
+				<input type="text" name="username" placeholder="请输入用户名" />
+				<input type="password" name="password" placeholder="请输入密码" />
+				<input type="button" value="登陆" onclick="login();" />
+			</form>
+		</span>
+	</div>
+	
+</body>
+</html>
