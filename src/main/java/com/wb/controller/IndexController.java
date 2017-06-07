@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ import com.wb.util.SystemTip;
 public class IndexController {
 
 	@RequestMapping("/index")
-	public String index(Model model,HttpServletRequest request){
+	public String index(Model model,HttpServletRequest request,HttpSession session){
 		Person person = new Person();
 		person.setName("张三");
 		person.setAge(18);
@@ -39,6 +40,8 @@ public class IndexController {
 		request.setAttribute("moneyDouble", 1.12510212);
 		request.setAttribute("moneyBigDecimal", new BigDecimal(2.5261231));
 		request.setAttribute("systemDate", new Date());
+		
+		session.setAttribute("testSession", "这是session内容");
 		
 		return "index";
 	}

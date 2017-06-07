@@ -13,6 +13,7 @@
 		str += "姓名：[[${person1.name}]]";
 		str += "年龄：[[${person1.age}]]";
 		console.log(str);
+		console.log("[[${session.testSession}]]");
 	});
 	
 	function btnClick(id){
@@ -59,7 +60,7 @@
 		<span class="title">
 		读取变量
 		</span>
-		<span th:text="${say}"></span>
+		<span th:text="${say + '读取session内容' + session.testSession}"></span>
 	</div>
 	
 	<div>
