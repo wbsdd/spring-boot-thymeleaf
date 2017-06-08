@@ -46,6 +46,11 @@ public class IndexController {
 		return "index";
 	}
 	
+	/**
+	 * 测试登陆
+	 * @param emp
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/login")
 	public SystemTip login(Employee emp){
